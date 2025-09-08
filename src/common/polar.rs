@@ -4,7 +4,7 @@ use polars::{
 };
 
 pub(crate) trait Polar {
-    fn get_unique_groups(data: &DataFrame, group_col: &str) -> Vec<String> {
+    fn get_unique_groups(data: &DataFrame, group_col: &str, sort: bool) -> Vec<String> {
         let unique_groups = data
             .column(group_col)
             .unwrap()
@@ -21,7 +21,9 @@ pub(crate) trait Polar {
             .collect();
 
         // Sort the groups to ensure consistent ordering
-        groups.sort();
+        if sort {
+            groups.sort();
+        }
         groups
     }
 
